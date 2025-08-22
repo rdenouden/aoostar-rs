@@ -8,7 +8,7 @@ Add your user to the `dialout` group for access to `/dev/ttyACM0`:
 sudo usermod -a -G dialout $USER
 ```
 
-> You may have to log out and back in for group changes to take effect.  
+> You may have to log out and back in for group changes to take effect.
 > If not using a Debian based Linux, the tty device might have a different name, or not using the `dialout` group.
 
 
