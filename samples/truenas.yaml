@@ -4,7 +4,7 @@ services:
       - "/dev/ttyACM0:/dev/ttyACM0"
 
     # using an explicit version tag is preferred
-    image: "ghcr.io/rdenouden/aoostar-rs:latest"
+    image: "ghcr.io/rdenouden/aoostar-rs:v0.1.2"
 
     # Uncomment this to keep the container from bootlooping
     # restart: never
