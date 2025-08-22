@@ -1,0 +1,22 @@
+services:
+  asterctl:
+    devices:
+      - "/dev/ttyACM0:/dev/ttyACM0"
+
+    # using an explicit version tag is preferred
+    image: "ghcr.io/rdenouden/aoostar-rs:latest"
+
+    # Uncomment this to keep the container from bootlooping
+    # restart: never
+    command:
+      - "--demo"
+      - "--device"
+      - "/dev/ttyACM0"
+
+    # use this command to poweroff the panel
+    # command:
+    #   - "--off"
+
+    # the app is not going into daemon mode therefore it will not run in the background
+    # If you don't want the app to loop change restart to "never"
+    restart: "unless-stopped"

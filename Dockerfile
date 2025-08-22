@@ -24,18 +24,15 @@ RUN --mount=type=cache,target=/root/.cargo/ \
 # RUN prelink /target/release/asterctl
 CMD ["/bin/bash"]
 
-
-
-FROM ubuntu AS magic 
+FROM ubuntu AS consolidation
 WORKDIR /app
 COPY --from=build /target/x86_64-unknown-linux-musl/release/asterctl /app
 # COPY --from=build /src/cfg/ /app/cfg/
 COPY --from=build /src/fonts/ /app/fonts/
 # CMD [ "bash" ]
 
-
-FROM scratch
-COPY --from=magic /app/ /app/
-ENTRYPOINT [ "/app/asterctl" ]
+FROM scratch AS final
+COPY --from=consolidation /app/ /
+ENTRYPOINT [ "/asterctl" ]
 CMD [ "--demo" ]
-# CMD [ "--config", "/app/cfg/monitor.json" ]
+# CMD [ "--config", "/cfg/monitor.json" ]

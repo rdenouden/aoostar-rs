@@ -1,12 +1,12 @@
 # AOOSTAR WTR MAX Screen Control
 
 Reverse engineering the [AOOSTAR WTR MAX](https://aoostar.com/products/aoostar-wtr-max-amd-r7-pro-8845hs-11-bays-mini-pc)
-display protocol, with a proof-of-concept application written in Rust.  
+display protocol, with a proof-of-concept application written in Rust.
 This project should also support the GEM12+ PRO device.
 
 **Disclaimer: ‼️ EXPERIMENTAL — use at your own risk ‼️**
 
-> I take no responsibility for the use of this software.  
+> I take no responsibility for the use of this software.
 > There is no official documentation available;
 > all display control commands have been reverse engineered from the original AOOSTAR-X software.
 
@@ -36,7 +36,7 @@ It *might* also work on Windows, but I neither have that OS, nor plan to install
 
 The official proprietary AOOSTAR-X display software is not suitable for NAS and security-minded users:
 
-- All-in-one solution that attempts to do everything, from sensor reading to running a web server for control and configuration (*exposed on all interfaces!*).  
+- All-in-one solution that attempts to do everything, from sensor reading to running a web server for control and configuration (*exposed on all interfaces!*).
   I prefer using existing monitoring tools and combining them to my liking.
 - Resource hungry, written in Python. Archive of v1.3.4 is 178 MB.
 - Closed source, requires root access, distributed over filesharing sites, some without HTTPS.
@@ -54,7 +54,7 @@ The display remains on continuously (24×7) if the official software is not runn
 
 **Out of scope:**
 
-- Reverse engineering the microcontroller firmware on the display board.  
+- Reverse engineering the microcontroller firmware on the display board.
   That would be an interesting task — potentially uncovering additional display commands — but is outside the project's current scope.
 - Reimplementing the full AOOSTAR-X display software, which is overly complex for most use cases.
 
@@ -122,7 +122,7 @@ first panel.
 
 Besides demo mode, the following control commands have been implemented.
 
-The `asterctl` binary is built in `./target/release`.  
+The `asterctl` binary is built in `./target/release`.
 Alternatively, use `cargo run --release --` to build and run automatically, for example: `cargo run --release -- --off`.
 
 > Aster: Greek for star and similar to AOOSTAR.
@@ -148,6 +148,30 @@ asterctl --image img/aybabtu.png
 This expects a 960 × 376 image (other sizes are automatically scaled and the aspect ratio is ignored).
 See Rust image crate for [supported image formats](https://github.com/image-rs/image?tab=readme-ov-file#supported-image-formats).
 
+## Docker
+### Build
+When building with docker none of the pre-requisites on the host are neccesary if you have docker you can start a build by executing
+
+`docker build .`
+
+This builds the docker image which contains only the asterctl and required assets. The asterctl is prelinked and ready to go in a docker container from scratch, no extra files required.
+
+If you would like to get the container contents, run
+`docker build --output ./output .` and it will return the container contents in the `output` folder
+
+if you want to run the container you can do so by running
+```
+docker build . -t aoostar-rs:dev
+docker run --rm -it aoostar-rs [eventual asterctl parameters]
+```
+
+or if you like no output, just run
+`docker run --rm -it $(docker build -q .) [eventual asterctl parameters]`
+
+### TrueNAS Scale 24+
+You can run this app by going to apps -> discover apps -> elipsis next to custom app and select "Install via yaml".
+Enter a name, e.g. "asterctl" and use the yaml from [samples/truenas.yaml](../samples/truenas.yaml) which is a very basic demo setup.
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
@@ -163,4 +187,3 @@ Licensed under either of
 - MIT License ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 at your option.
-

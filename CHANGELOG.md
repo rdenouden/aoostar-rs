@@ -16,3 +16,13 @@ _Changes in the next release_
 - Initial `asterctl` tool release for controlling the LCD: on, off, display an image
 - systemd service file to switch off LCD on system start.
 - Demo mode
+
+## v0.1.1 - 2025-08-22
+### Added
+- Added container image build
+
+## v0.1.1 - 2025-08-22
+### Added
+- Added documentation
+- Added samples
+- introduced pre-commit

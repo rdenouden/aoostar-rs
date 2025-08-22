@@ -144,7 +144,7 @@ jobs:
         run: |
           # Files are wrapped in tar from actions/upload-artifact, then extracted into a directory by actions/download-artifact
           ls -lah
-          for D in * 
+          for D in *
             do if [ -d "${D}" ]; then
               echo "Archive directory: $D"
               ls -lah $D/*
