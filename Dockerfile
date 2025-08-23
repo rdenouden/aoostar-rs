@@ -8,23 +8,20 @@ WORKDIR /src
 ADD src/ /src/src/
 ADD Cargo* /src/
 ADD fonts/ /src/fonts/
-# ADD cfg/ /src/cfg/
+ADD cfg/ /src/cfg/
 ADD img/ /src/img/
 RUN /root/.cargo/bin/rustup target add x86_64-unknown-linux-musl
 RUN /root/.cargo/bin/cargo build --release --target x86_64-unknown-linux-musl
 RUN cp -r /src/target /target
-# RUN prelink /target/release/asterctl
 CMD ["/bin/bash"]
 
-FROM ubuntu AS consolidation
+FROM alpine AS consolidation
 WORKDIR /app
 COPY --from=build /target/x86_64-unknown-linux-musl/release/asterctl /app
-# COPY --from=build /src/cfg/ /app/cfg/
+COPY --from=build /src/cfg/ /app/cfg/
 COPY --from=build /src/fonts/ /app/fonts/
-# CMD [ "bash" ]
 
 FROM scratch AS final
 COPY --from=consolidation /app/ /
 ENTRYPOINT [ "/asterctl" ]
-CMD [ "--demo" ]
-# CMD [ "--config", "/cfg/monitor.json" ]
+CMD [ "--demo", "--config", "/cfg/monitor.json" ]
